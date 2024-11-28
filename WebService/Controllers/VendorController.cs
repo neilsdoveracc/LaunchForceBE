@@ -29,11 +29,11 @@ namespace WebService.Controllers
                 _logger.LogInformation("CreateVendor Start");
                 var _request = JsonConvert.DeserializeObject<VendorDTO>(request.ToString()); ;
 
-                var result = _vendorManager.CreateVendor(_request);
+                var result = await _vendorManager.CreateVendor(_request);
 
                 _logger.LogInformation("CreateVendor End");
 
-                return StatusCode((int)result.Status, result);
+                return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
@@ -43,17 +43,14 @@ namespace WebService.Controllers
         }
         [HttpGet]
         [Route("GetVendor")]
-        public async Task<IActionResult> GetVendor([FromBody] object request)
+        public async Task<IActionResult> GetVendor()
         {
             try
             {
                 _logger.LogInformation("GetVendor Start");
 
-                // Deserialize the request object to VendorDTO or whatever type is appropriate
-                var _request = JsonConvert.DeserializeObject<VendorDTO>(request.ToString());
-
                 // Assuming _vendorManager has a GetVendor method that takes the VendorDTO and returns vendor data
-                var result = await _vendorManager.GetVendor(_request);
+                var result = await _vendorManager.GetVendor();
 
                 _logger.LogInformation("GetVendor End");
 

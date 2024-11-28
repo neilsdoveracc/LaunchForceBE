@@ -32,7 +32,7 @@ namespace WebService.Managers
             throw new NotImplementedException();
         }
 
-        public async Task<ResponseObject> GetVendor(VendorDTO vendor)
+        public async Task<ResponseObject> GetVendor()
         {
             try
             {
@@ -53,7 +53,7 @@ namespace WebService.Managers
             catch (Exception ex)
             {
                 // Log the error if something goes wrong
-                _logger.LogError("Error retrieving vendor", ex);
+                //_logger.LogError("Error retrieving vendor", ex);
                 return new ResponseObject(HttpStatusCode.InternalServerError, "An error occurred", null);
             }
         }

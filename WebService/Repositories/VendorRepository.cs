@@ -4,6 +4,7 @@ using WebService.configs;
 using WebService.Constants;
 using WebService.Entities;
 using WebService.Interfaces;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace WebService.Repositories
 {
@@ -23,9 +24,11 @@ namespace WebService.Repositories
                     cmd.Connection = connection;
                     cmd.Parameters.AddWithValue("@vendor_id", vendor.VendorId);
                     cmd.Parameters.AddWithValue("@vendor_name", vendor.VendorName);
-                    cmd.Parameters.AddWithValue("@loc_id", vendor.LocationId);
-                    cmd.Parameters.AddWithValue("@skill_set", vendor.SkillSet);
+                    cmd.Parameters.AddWithValue("@location_id", vendor.LocationId);
+                    cmd.Parameters.AddWithValue("@skills_set", vendor.SkillSet);
+                    cmd.Parameters.AddWithValue("@modified_date", null);
                     //_logger.LogInformation("End");
+                    
                     return await cmd.ExecuteNonQueryAsync() > 0;
 
                 }
@@ -50,14 +53,22 @@ namespace WebService.Repositories
                     { 
                          while (reader.Read())
                          {
-                            var VendorDto = new VendorDTO()
+                            try
                             {
-                                VendorId = reader[SqlColumns.VendorId].ToString(),
-                                VendorName = reader[SqlColumns.VendorName].ToString(),
-                                LocationId = Convert.ToInt32( reader[SqlColumns.VendorName]),
-                                SkillSet = reader[SqlColumns.VendorName].ToString()
-                            };
-                            vendorList.Add(VendorDto);
+                                var VendorDto = new VendorDTO()
+                                {
+                                    VendorId = reader[SqlColumns.VendorId].ToString(),
+                                    VendorName = reader[SqlColumns.VendorName].ToString(),
+                                    LocationId = Convert.ToInt32(reader[SqlColumns.LocationId].ToString()),
+                                    SkillSet = reader[SqlColumns.VendorName].ToString()
+                                };
+                                vendorList.Add(VendorDto);
+                            }
+                            catch(Exception ex)
+                            {
+                                throw ex;   
+                            }
+                            
                          }
 
                          return vendorList;
