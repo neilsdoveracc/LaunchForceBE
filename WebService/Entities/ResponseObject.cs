@@ -5,7 +5,7 @@ namespace WebService.Entities
 {
     public class ResponseObject
     {
-        public ResponseObject(HttpStatusCode statusCode, string message, string data) 
+        public ResponseObject(HttpStatusCode statusCode, string message, object data) 
         { 
             this.StatusCode = statusCode;
             this.Message = message;

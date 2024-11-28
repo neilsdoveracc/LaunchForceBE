@@ -15,7 +15,10 @@ builder.Services.AddSwaggerGen();
 
 //add services in DI
 builder.Services.AddScoped<IUserManager, UserManager>();
+builder.Services.AddScoped<IVendorManager, VendorManager>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+
 
 var app = builder.Build();
 
