@@ -4,6 +4,6 @@ namespace WebService.Interfaces
 {
     public interface IUserManager
     {
-        Task<HttpResponse> CreateUser(UserDTO user);
+        Task<ResponseObject> CreateUser(UserDTO user);
     }
 }

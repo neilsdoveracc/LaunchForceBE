@@ -1,13 +1,39 @@
-﻿using WebService.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using Webservice.Utils;
+using WebService.Controllers;
+using WebService.Entities;
 using WebService.Interfaces;
 
 namespace WebService.Managers
 {
     public class UserManager : IUserManager
     {
-        public Task<HttpResponse> CreateUser(UserDTO user)
+        private readonly IUserRepository _userRepository;
+
+        public UserManager(IUserRepository userRepository)
+        { 
+            _userRepository = userRepository;
+        }
+        public async Task<ResponseObject> CreateUser(UserDTO user)
         {
-            throw new NotImplementedException();
+            //_logger.LogInformation("CreateUser manager Start");
+            user.UserId= HashUtil.GetUniqueId();
+            if(user.IsNewUser)
+            {
+                user.Password= HashUtil.GetUniqueId();
+            }
+            var result = await _userRepository.CreateUser(user);
+            if (result)
+            {
+                //_logger.LogInformation("CreateCompany manager - Success");
+                return new ResponseObject(HttpStatusCode.Created, "User Created Successfully", "");
+            }
+            else
+            {
+                //_logger.LogInformation("CreateCompany manager - Failure");
+                return new ResponseObject(HttpStatusCode.BadRequest, "User creation failed", null);
+            }
         }
     }
 }

@@ -1,0 +1,7 @@
+﻿namespace WebService.Constants
+{
+    public static class MySqlConstants
+    {
+        public static string CreateUser = "INSERT INTO user_master (user_id,role_id,dept_id,org_id,first_name,last_name,user_name, user_password, is_new_user, email, mobile, location, created_by, created_date, modified_by, modified_date) VALUES (@user_id,@role_id,@dept_id,@org_id,@first_name,@last_name,@user_name, @user_password, @is_new_user, @email, @mobile, @location, @created_by, @created_date, @modified_by, @modified_date)";
+    }
+}

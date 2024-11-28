@@ -11,12 +11,12 @@ namespace WebService.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly ILogger<UserController> _logger;
+        //private readonly ILogger<UserController> _logger;
         private readonly IUserManager _userManager;
 
-        public UserController(ILogger<UserController> logger, IUserManager userManager)
+        public UserController(IUserManager userManager)
         {
-            _logger = logger;
+            //_logger = logger;
             _userManager = userManager;
         }
 
@@ -26,18 +26,18 @@ namespace WebService.Controllers
         {
             try
             {
-                _logger.LogInformation("CreateCompany Start");
+                //_logger.LogInformation("CreateCompany Start");
                 var _request = JsonConvert.DeserializeObject<UserDTO>(request.ToString()); ;
 
-                var result = _userManager.CreateUser(_request);
+                var result = await _userManager.CreateUser(_request);
 
-                _logger.LogInformation("CreateCompany End");
+                //_logger.LogInformation("CreateCompany End");
 
-                return StatusCode((int)result.Status, result);
+                return StatusCode((int)result.StatusCode, result);
             }
             catch (Exception ex)
             {
-                _logger.LogError("End - Failed", ex);
+                //_logger.LogError("End - Failed", ex);
                 return StatusCode((int)HttpStatusCode.InternalServerError,ex.ToString());
             }
         }

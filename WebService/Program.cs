@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
+using WebService.Controllers;
 using WebService.Interfaces;
 using WebService.Managers;
+using WebService.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 //add services in DI
 builder.Services.AddScoped<IUserManager, UserManager>();
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
