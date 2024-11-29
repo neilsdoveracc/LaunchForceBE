@@ -2,6 +2,7 @@
 using System.Data.Common;
 using WebService.configs;
 using WebService.Constants;
+using WebService.Controllers;
 using WebService.Entities;
 using WebService.Interfaces;
 using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
@@ -10,14 +11,22 @@ namespace WebService.Repositories
 {
     public class VendorRepository : IVendorRepository
     {
+        private readonly ILogger<VendorController> _logger;
+
+        public VendorRepository(ILogger<VendorController> logger)
+        {
+            _logger = logger;
+        }
+    
         public async Task<bool> CreateVendor(VendorDTO vendor)
         {
 
-            //_logger.LogInformation("Start");
+            
             using (MySqlConnection connection = new MySqlConnection(ConfigConstants.MySqlConnectionString))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
                 {
+                    _logger.LogInformation(ConfigConstants.MySqlConnectionString);
                     connection.Open();
 
                     cmd.CommandText = MySqlConstants.CreateVendor;

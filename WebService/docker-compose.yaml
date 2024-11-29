@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  webapi:
+    image: webapp:latest
+    ports:
+      - "127.0.0.1:80:80"  # Expose web API on localhost (only accessible on localhost)
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Hackathon4
+      MYSQL_DATABASE: launchforce
+    ports:
+      - "3306:3306"  # Bind MySQL to localhost
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend
+
+volumes:
+  mysql-data:  # Volume to persist MySQL data
+
+networks:
+  backend:
+    driver: bridge
